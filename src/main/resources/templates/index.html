@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sistem Laundry Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row" style="height: 100vh">
+        <!-- Sidebar -->
+        <div class="col-2 bg-primary text-white">
+          <div class="p-3">
+            <h4 class="text-center">BANDUNG SEHAT</h4>
+          </div>
+          <nav class="nav flex-column">
+            <a class="nav-link text-white" th:href="@{/dashboard}"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+            <a class="nav-link text-white" th:href="@{/dashboard/reservasi}"><i class="bi bi-people-fill me-2"></i>Resevasi</a>
+            <a class="nav-link text-white" th:href="@{/dashboard/paketmcu}"><i class="bi bi-journal-text me-2"></i>Paket MCU</a>
+            <a class="nav-link text-white" th:href="@{/dashboard/petugas}"><i class="bi bi-file-person-fill me-2"></i>Petugas</a>
+            <a class="nav-link text-white" th:href="@{/}"><i class="bi bi-house-door-fill me-2"></i>Home</a>
+          </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-10">
+          <!-- Navbar -->
+          <nav class="navbar navbar-light bg-light shadow-sm mb-3">
+            <div class="container-fluid">
+              <span class="navbar-text" th:text="'Welcome, ' + ${user.name}"></span>
+              <form action="/login/logout" method="POST">
+                <button class="btn btn-outline-primary">Logout</button>
+              </form>
+            </div>
+          </nav>
+
+          <!-- Dashboard Cards -->
+          <div class="container">
+            <div class="row g-3 mb-3">
+              <!-- Card: Pemasukan Total -->
+              <div class="col-md-4 col-lg-4">
+                <div class="card text-center border-info">
+                  <div class="card-body">
+                    <h5 class="card-title">Pemasukan Total</h5>
+                    <h3 class="text-info" th:text="'Rp ' + ${totalPemasukan}"></h3>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card: Dalam Proses -->
+              <div class="col-md-4 col-lg-4">
+                <div class="card text-center border-warning">
+                  <div class="card-body">
+                    <h5 class="card-title">Dalam Proses</h5>
+                    <h3 class="text-warning" th:text="${jumlahProgres}">29</h3>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card: Selesai -->
+              <div class="col-md-4 col-lg-4">
+                <div class="card text-center border-success">
+                  <div class="card-body">
+                    <h5 class="card-title">Selesai</h5>
+                    <h3 class="text-success" th:text="${jumlahSelesai}"></h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <table class="table table-bordered">
+                <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Pasien</th>
+                  <th>Paket MCU</th>
+                  <th>Tanggal Pemeriksaan</th>
+                  <th>Harga</th>
+                  <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pendaftaran, stat : ${pendafratanProgres}">
+                  <td th:text="${stat.index + 1}"></td>
+                  <td th:text="${pendaftaran.pasien.nama}"></td>
+                  <td th:text="${pendaftaran.paketMCU.nama}"></td>
+                  <td th:text="${pendaftaran.tanggalPendaftaran}"></td>
+                  <td th:text="${pendaftaran.paketMCU.harga}"></td>
+                  <td th:text="${pendaftaran.status}"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
